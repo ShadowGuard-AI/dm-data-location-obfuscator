@@ -1,3 +1,5 @@
+![Banner](banner.png)
+
 # dm-data-location-obfuscator
 Adds random noise to geographic coordinates (latitude/longitude) within a dataset, preserving general location but obscuring exact addresses. Uses a specified radius for the noise. - Focused on Tools designed to generate or mask sensitive data with realistic-looking but meaningless values
 
