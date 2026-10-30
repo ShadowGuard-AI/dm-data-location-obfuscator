@@ -45,24 +45,31 @@ def add_noise_to_coordinates(latitude, longitude, radius_meters):
             raise ValueError("Radius must be a non-negative number.")
 
 
-        # Earth's radius in meters
+        if not -90 <= latitude <= 90:
+            raise ValueError("Latitude must be between -90 and 90.")
+        if not -180 <= longitude <= 180:
+            raise ValueError("Longitude must be between -180 and 180.")
+
         earth_radius = 6371000
 
-        # Convert radius from meters to degrees
-        radius_degrees = radius_meters / earth_radius
-
-        # Generate random angle in radians
+        # Sample a point inside the disc, not on its rim: the radial
+        # distance needs the square root of a uniform draw, otherwise
+        # every point lands at exactly the requested radius, which is
+        # itself a recognisable pattern. The old code also used
+        # radius / earth_radius (a figure in radians) as if it were
+        # degrees, so a 1000 m request actually moved a point about
+        # 17 m at the equator.
+        distance = radius_meters * math.sqrt(random.random())
         random_angle = random.uniform(0, 2 * math.pi)
 
-        # Calculate the change in latitude and longitude
-        delta_latitude = radius_degrees * math.sin(random_angle)
-        delta_longitude = radius_degrees * math.cos(random_angle)
+        # Metres to degrees is not one scale for both axes: a degree of
+        # longitude covers cos(latitude) times the ground distance of a
+        # degree of latitude, so the longitude step is divided by that.
+        delta_latitude = (distance * math.sin(random_angle) / earth_radius) * (180 / math.pi)
+        delta_longitude = (distance * math.cos(random_angle)
+                            / (earth_radius * math.cos(math.radians(latitude)))) * (180 / math.pi)
 
-        # Calculate the new latitude and longitude
-        new_latitude = latitude + delta_latitude
-        new_longitude = longitude + delta_longitude
-
-        return new_latitude, new_longitude
+        return latitude + delta_latitude, longitude + delta_longitude
 
     except (TypeError, ValueError) as e:
         logging.error(f"Error during coordinate obfuscation: {e}")
@@ -78,6 +85,10 @@ def main():
     if args.verbose:
         logging.getLogger().setLevel(logging.DEBUG)
         logging.debug("Verbose logging enabled.")
+
+    if args.num_points < 1:
+        logging.error("Number of points must be at least 1.")
+        sys.exit(1)
 
     try:
         for _ in range(args.num_points):
