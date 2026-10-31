@@ -66,10 +66,26 @@ def add_noise_to_coordinates(latitude, longitude, radius_meters):
         # longitude covers cos(latitude) times the ground distance of a
         # degree of latitude, so the longitude step is divided by that.
         delta_latitude = (distance * math.sin(random_angle) / earth_radius) * (180 / math.pi)
-        delta_longitude = (distance * math.cos(random_angle)
-                            / (earth_radius * math.cos(math.radians(latitude)))) * (180 / math.pi)
+        # Near the poles a degree of longitude covers almost no ground,
+        # so dividing by the cosine blows the longitude offset up without
+        # bound. At a latitude whose cosine is near zero, skip the cosine
+        # scaling entirely and leave the longitude offset at zero.
+        cos_latitude = math.cos(math.radians(latitude))
+        if abs(cos_latitude) < 1e-6:
+            delta_longitude = 0.0
+        else:
+            delta_longitude = (distance * math.cos(random_angle)
+                                / (earth_radius * cos_latitude)) * (180 / math.pi)
 
-        return latitude + delta_latitude, longitude + delta_longitude
+        new_latitude = latitude + delta_latitude
+        new_longitude = longitude + delta_longitude
+
+        # Keep every printed pair a valid coordinate: clamp latitude into
+        # -90 to 90 and wrap longitude into -180 to 180.
+        new_latitude = max(-90.0, min(90.0, new_latitude))
+        new_longitude = ((new_longitude + 180.0) % 360.0) - 180.0
+
+        return new_latitude, new_longitude
 
     except (TypeError, ValueError) as e:
         logging.error(f"Error during coordinate obfuscation: {e}")
