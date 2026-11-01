@@ -82,6 +82,10 @@ def add_noise_to_coordinates(latitude, longitude, radius_meters):
 
         # Keep every printed pair a valid coordinate: clamp latitude into
         # -90 to 90 and wrap longitude into -180 to 180.
+        # Clamping is not neutral near a pole: points whose noise
+        # carried them past 90 pile up at exactly 90, so a cluster of
+        # obfuscated points at the pole line is an artefact of this
+        # line, not of the sampling above it.
         new_latitude = max(-90.0, min(90.0, new_latitude))
         new_longitude = ((new_longitude + 180.0) % 360.0) - 180.0
 
@@ -107,6 +111,11 @@ def main():
         sys.exit(1)
 
     try:
+        # Every point is drawn around the original coordinate, never
+        # around the previous point, so num_points gives independent
+        # samples of one place rather than a wandering trail. A radius
+        # of zero is valid input here and prints the original pair
+        # back labelled as obfuscated.
         for _ in range(args.num_points):
             new_latitude, new_longitude = add_noise_to_coordinates(args.latitude, args.longitude, args.radius)
             print(f"Original Coordinates: Latitude={args.latitude}, Longitude={args.longitude}")
