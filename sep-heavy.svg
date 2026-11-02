@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 36" role="img" aria-label="Major separator: a full width line in shadow plum with an hourglass at the centre whose sand falls and resets in a slow loop">
+<line x1="0" y1="18" x2="552" y2="18" stroke="#5c4260" stroke-width="3"/>
+<line x1="648" y1="18" x2="1200" y2="18" stroke="#5c4260" stroke-width="3"/>
+<g stroke="#5c4260" stroke-width="2" fill="none"><path d="M576 4 H624 M576 32 H624 M578 4 L600 18 L622 32 M622 4 L600 18 L578 32"/></g>
+<polygon points="588,8 612,8 600,17" fill="#bc6040"><animate attributeName="points" values="588,8 612,8 600,17; 596,13 604,13 600,17; 588,8 612,8 600,17" dur="6s" repeatCount="indefinite"/></polygon>
+<polygon points="591,28 609,28 600,19" fill="#3e807c"><animate attributeName="points" values="597,25 603,25 600,19; 591,28 609,28 600,19; 597,25 603,25 600,19" dur="6s" repeatCount="indefinite"/></polygon>
+<circle cx="600" cy="18" r="2" fill="#bc6040"><animate attributeName="cy" values="18; 26; 18" dur="6s" repeatCount="indefinite"/></circle>
+</svg>

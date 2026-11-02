@@ -1,0 +1,7 @@
+Furgatorio licence note
+
+Face: Furgatorio, by Aaron Amar.
+Source: DaFont, where the face is stated as free for commercial use.
+Standing in this project: cleared as the embedded face for public sites and shipped art, as recorded in the governing prose for dm-data-location-obfuscator.
+This note is the licence record shipped beside the font file. It records the statement made at the source. No other licence terms are claimed for this face in this folder.
+Running text face in the same folder: Barlow, under the SIL Open Font License 1.1, licence document OFL-Barlow.txt.
