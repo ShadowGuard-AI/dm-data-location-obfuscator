@@ -26,14 +26,14 @@ Every printed pair is a valid coordinate. Latitude is clamped into the -90 to 90
 ![Major separator](sep-heavy.svg)
 
 ## Install
-`git clone https://github.com/ShadowStrikeHQ/dm-data-location-obfuscator`
+`git clone https://github.com/ShadowGuard-AI/dm-data-location-obfuscator`
 
 > Ledger entry: the README clone line names an older organisation.
 
 ![Minor separator](sep-light.svg)
 
 ## Usage
-`./dm-data-location-obfuscator [params]`
+`python3 main.py latitude longitude radius [options]`
 
 ![Minor separator](sep-light.svg)
 
@@ -45,7 +45,7 @@ Every printed pair is a valid coordinate. Latitude is clamped into the -90 to 90
 ![Minor separator](sep-light.svg)
 
 ## License
-Copyright (c) ShadowStrikeHQ
+This project is released under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ![Major separator](sep-heavy.svg)
 
